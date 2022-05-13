@@ -1,5 +1,6 @@
 import { Button } from './Button';
 import '../styles/sidebar.scss';
+import { useMemo } from 'react';
 
 interface GenreResponseProps {
   id: number;
@@ -15,13 +16,17 @@ interface SideBarProps {
 
 export function SideBar({genres , selectedGenreId, handleClickButton}: SideBarProps) {
 
+  const genreSelected = useMemo(() => {
+    return genres;
+  }, [selectedGenreId])
+
   return (
     <>
       <nav className="sidebar">
         <span>Watch<p>Me</p></span>
 
         <div className="buttons-container">
-          {genres.map(genre => (
+          {genreSelected.map(genre => (
             <Button
               key={String(genre.id)}
               title={genre.title}
