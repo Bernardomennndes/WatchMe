@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { SideBar } from './components/SideBar';
 import { Content } from './components/Content';
@@ -16,14 +16,12 @@ interface GenreResponseProps {
 export function App() {
 
   const [selectedGenreId, setSelectedGenreId] = useState(1);
-
   const [genres, setGenres] = useState<GenreResponseProps[]>([]);
-
-  function handleClickButton(id: number) {
-    setSelectedGenreId(id);
-  }
-
   const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>({} as GenreResponseProps);
+
+  const handleClickButton = useCallback((id: number) => {
+    setSelectedGenreId(id);
+  }, [])
 
   useEffect(() => {
     api.get<GenreResponseProps[]>('genres').then(response => {
